@@ -2,7 +2,14 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, Heart, ArrowLeftRight } from 'lucide-react'
 import type { Pokemon } from '../types/pokemon'
-import { formatPokemonId, getPokemonArtworkUrl, TYPE_STYLES, DEFAULT_TYPE_STYLE } from '../utils/pokemon'
+import {
+  formatPokemonId,
+  getPokemonArtworkUrl,
+  getTypeBadgeStyle,
+  getPokemonTotalStats,
+  POKEMON_STATS_DEFINITIONS,
+  MAX_POKEMON_STAT_VALUE,
+} from '../utils/pokemon'
 import { cn } from '../lib/utils'
 
 export interface PokemonDetailsProps {
@@ -49,22 +56,7 @@ export function PokemonDetails({
     }
   }, [onClose, onPrevious, onNext, hasPrevious, hasNext])
 
-  const statsList = [
-    { key: 'hp', label: 'HP', value: pokemon.stats.hp, max: 255, color: 'bg-emerald-500' },
-    { key: 'attack', label: 'Ataque', value: pokemon.stats.attack, max: 255, color: 'bg-orange-500' },
-    { key: 'defense', label: 'Defesa', value: pokemon.stats.defense, max: 255, color: 'bg-amber-500' },
-    { key: 'specialAttack', label: 'Ataque Especial', value: pokemon.stats.specialAttack, max: 255, color: 'bg-blue-500' },
-    { key: 'specialDefense', label: 'Defesa Especial', value: pokemon.stats.specialDefense, max: 255, color: 'bg-indigo-500' },
-    { key: 'speed', label: 'Velocidade', value: pokemon.stats.speed, max: 255, color: 'bg-rose-500' },
-  ]
-
-  const totalStats =
-    pokemon.stats.hp +
-    pokemon.stats.attack +
-    pokemon.stats.defense +
-    pokemon.stats.specialAttack +
-    pokemon.stats.specialDefense +
-    pokemon.stats.speed
+  const totalStats = getPokemonTotalStats(pokemon.stats)
 
   return (
     <motion.div
@@ -182,7 +174,7 @@ export function PokemonDetails({
                     key={type.id}
                     className={cn(
                       'rounded-md border px-2.5 py-1 text-xs font-medium leading-none',
-                      TYPE_STYLES[type.name.toLowerCase()] ?? DEFAULT_TYPE_STYLE
+                      getTypeBadgeStyle(type.name)
                     )}
                   >
                     {type.name}
@@ -197,13 +189,14 @@ export function PokemonDetails({
                   Atributos Base
                 </h3>
                 <span className="text-[11px] font-medium text-slate-400">
-                  Máx. 255
+                  Máx. {MAX_POKEMON_STAT_VALUE}
                 </span>
               </div>
 
               <div className="space-y-3">
-                {statsList.map((stat) => {
-                  const percentage = Math.min(100, Math.round((stat.value / stat.max) * 100))
+                {POKEMON_STATS_DEFINITIONS.map((stat) => {
+                  const value = pokemon.stats[stat.key]
+                  const percentage = Math.min(100, Math.round((value / MAX_POKEMON_STAT_VALUE) * 100))
                   return (
                     <div
                       key={stat.key}
@@ -213,7 +206,7 @@ export function PokemonDetails({
                         {stat.label}
                       </span>
                       <span className="text-xs font-semibold font-mono text-slate-800 text-right">
-                        {stat.value}
+                        {value}
                       </span>
                       <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                         <motion.div

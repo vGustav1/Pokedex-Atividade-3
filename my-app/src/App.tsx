@@ -8,7 +8,7 @@ import { PokemonCompare } from './components/PokemonCompare'
 import { TrainersModal } from './components/TrainersModal'
 import { AppleSpotlight } from './components/AppleSpotlight'
 import { useFavorites } from './hooks/useFavorites'
-import { sortPokemon } from './utils/pokemon'
+import { sortPokemon, normalizeSearchTerm } from './utils/pokemon'
 import type { Pokemon, SortOption } from './types/pokemon'
 import './App.css'
 
@@ -25,7 +25,7 @@ function App() {
   const allPokemon: Pokemon[] = pokedexData.pokemon
 
   const filteredPokemon = useMemo(() => {
-    const term = searchTerm.trim().toLowerCase().replace(/^#/, '')
+    const term = normalizeSearchTerm(searchTerm)
 
     const filtered = allPokemon.filter((pokemon) => {
       const matchesSearch =

@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import {
   getStoredFavorites,
-  isFavorite,
   toggleFavorite,
+  FAVORITES_EVENT,
 } from '../utils/favorites'
 
 export function useFavorites() {
@@ -14,11 +14,11 @@ export function useFavorites() {
     }
 
     window.addEventListener('storage', syncFavorites)
-    window.addEventListener('pokedex_favorites_changed', syncFavorites)
+    window.addEventListener(FAVORITES_EVENT, syncFavorites)
 
     return () => {
       window.removeEventListener('storage', syncFavorites)
-      window.removeEventListener('pokedex_favorites_changed', syncFavorites)
+      window.removeEventListener(FAVORITES_EVENT, syncFavorites)
     }
   }, [])
 
@@ -38,5 +38,3 @@ export function useFavorites() {
     toggleFavorite: handleToggle,
   }
 }
-
-export { isFavorite, toggleFavorite, getStoredFavorites }

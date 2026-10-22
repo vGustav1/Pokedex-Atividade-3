@@ -8,6 +8,38 @@ export function getPokemonArtworkUrl(id: number): string {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
 }
 
+export function normalizeSearchTerm(term: string): string {
+  return term.trim().toLowerCase().replace(/^#/, '')
+}
+
+export function getPokemonTotalStats(stats: Pokemon['stats']): number {
+  return (
+    stats.hp +
+    stats.attack +
+    stats.defense +
+    stats.specialAttack +
+    stats.specialDefense +
+    stats.speed
+  )
+}
+
+export const MAX_POKEMON_STAT_VALUE = 255
+
+export interface StatDefinition {
+  key: keyof Pokemon['stats']
+  label: string
+  color: string
+}
+
+export const POKEMON_STATS_DEFINITIONS: StatDefinition[] = [
+  { key: 'hp', label: 'HP', color: 'bg-emerald-500' },
+  { key: 'attack', label: 'Ataque', color: 'bg-orange-500' },
+  { key: 'defense', label: 'Defesa', color: 'bg-amber-500' },
+  { key: 'specialAttack', label: 'Ataque Especial', color: 'bg-blue-500' },
+  { key: 'specialDefense', label: 'Defesa Especial', color: 'bg-indigo-500' },
+  { key: 'speed', label: 'Velocidade', color: 'bg-rose-500' },
+]
+
 export function sortPokemon(list: Pokemon[], sortBy: SortOption): Pokemon[] {
   const sorted = [...list]
 
@@ -49,6 +81,10 @@ export const TYPE_STYLES: Record<string, string> = {
 }
 
 export const DEFAULT_TYPE_STYLE = 'bg-slate-100 text-slate-700 border-slate-200'
+
+export function getTypeBadgeStyle(typeName: string): string {
+  return TYPE_STYLES[typeName.toLowerCase()] ?? DEFAULT_TYPE_STYLE
+}
 
 export const ALL_POKEMON_TYPES = [
   { id: 'Normal', label: 'Normal' },

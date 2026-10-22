@@ -1,5 +1,5 @@
 const FAVORITES_STORAGE_KEY = 'pokedex_favorites'
-const FAVORITES_EVENT = 'pokedex_favorites_changed'
+export const FAVORITES_EVENT = 'pokedex_favorites_changed'
 
 export function getStoredFavorites(): number[] {
   if (typeof window === 'undefined') return []
@@ -21,9 +21,7 @@ export function setStoredFavorites(favorites: number[]): void {
   try {
     window.localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites))
     window.dispatchEvent(new CustomEvent(FAVORITES_EVENT, { detail: favorites }))
-  } catch {
-    // Falha silenciosa em ambientes com armazenamento restrito
-  }
+  } catch {}
 }
 
 export function isFavorite(id: number, favorites?: number[]): boolean {

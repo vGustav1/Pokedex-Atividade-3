@@ -6,8 +6,7 @@ import type { Pokemon, Trainer } from '../types/pokemon'
 import {
   formatPokemonId,
   getPokemonArtworkUrl,
-  TYPE_STYLES,
-  DEFAULT_TYPE_STYLE,
+  getTypeBadgeStyle,
 } from '../utils/pokemon'
 import { cn } from '../lib/utils'
 
@@ -214,7 +213,7 @@ export function TrainersModal({ onClose, onSelectPokemon }: TrainersModalProps) 
                               key={type.id}
                               className={cn(
                                 'rounded px-1.5 py-0.2 text-[9px] font-medium border leading-normal truncate',
-                                TYPE_STYLES[type.name.toLowerCase()] ?? DEFAULT_TYPE_STYLE
+                                getTypeBadgeStyle(type.name)
                               )}
                             >
                               {type.name}

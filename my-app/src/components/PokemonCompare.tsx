@@ -5,8 +5,11 @@ import type { Pokemon } from '../types/pokemon'
 import {
   formatPokemonId,
   getPokemonArtworkUrl,
-  TYPE_STYLES,
-  DEFAULT_TYPE_STYLE,
+  getTypeBadgeStyle,
+  getPokemonTotalStats,
+  normalizeSearchTerm,
+  POKEMON_STATS_DEFINITIONS,
+  MAX_POKEMON_STAT_VALUE,
 } from '../utils/pokemon'
 import { cn } from '../lib/utils'
 
@@ -63,7 +66,7 @@ export function PokemonCompare({
   }, [activeSlot, onClose])
 
   const filteredSelectorList = useMemo(() => {
-    const term = selectorSearch.trim().toLowerCase().replace(/^#/, '')
+    const term = normalizeSearchTerm(selectorSearch)
     if (!term) return allPokemon
 
     return allPokemon.filter(
@@ -71,48 +74,16 @@ export function PokemonCompare({
     )
   }, [allPokemon, selectorSearch])
 
-  const statsList = [
-    { key: 'hp', label: 'HP', val1: pokemon1.stats.hp, val2: pokemon2.stats.hp, max: 255 },
-    { key: 'attack', label: 'Ataque', val1: pokemon1.stats.attack, val2: pokemon2.stats.attack, max: 255 },
-    { key: 'defense', label: 'Defesa', val1: pokemon1.stats.defense, val2: pokemon2.stats.defense, max: 255 },
-    {
-      key: 'specialAttack',
-      label: 'Ataque Especial',
-      val1: pokemon1.stats.specialAttack,
-      val2: pokemon2.stats.specialAttack,
-      max: 255,
-    },
-    {
-      key: 'specialDefense',
-      label: 'Defesa Especial',
-      val1: pokemon1.stats.specialDefense,
-      val2: pokemon2.stats.specialDefense,
-      max: 255,
-    },
-    { key: 'speed', label: 'Velocidade', val1: pokemon1.stats.speed, val2: pokemon2.stats.speed, max: 255 },
-  ] as const
-
-  const totalStats1 =
-    pokemon1.stats.hp +
-    pokemon1.stats.attack +
-    pokemon1.stats.defense +
-    pokemon1.stats.specialAttack +
-    pokemon1.stats.specialDefense +
-    pokemon1.stats.speed
-
-  const totalStats2 =
-    pokemon2.stats.hp +
-    pokemon2.stats.attack +
-    pokemon2.stats.defense +
-    pokemon2.stats.specialAttack +
-    pokemon2.stats.specialDefense +
-    pokemon2.stats.speed
+  const totalStats1 = getPokemonTotalStats(pokemon1.stats)
+  const totalStats2 = getPokemonTotalStats(pokemon2.stats)
 
   let wins1 = 0
   let wins2 = 0
-  for (const stat of statsList) {
-    if (stat.val1 > stat.val2) wins1++
-    else if (stat.val2 > stat.val1) wins2++
+  for (const stat of POKEMON_STATS_DEFINITIONS) {
+    const val1 = pokemon1.stats[stat.key]
+    const val2 = pokemon2.stats[stat.key]
+    if (val1 > val2) wins1++
+    else if (val2 > val1) wins2++
   }
 
   const handleRandomize = (slot: 1 | 2) => {
@@ -236,7 +207,7 @@ export function PokemonCompare({
                     key={type.id}
                     className={cn(
                       'rounded-md border px-1.5 py-0.5 text-[10px] font-medium leading-none',
-                      TYPE_STYLES[type.name.toLowerCase()] ?? DEFAULT_TYPE_STYLE
+                      getTypeBadgeStyle(type.name)
                     )}
                   >
                     {type.name}
@@ -307,7 +278,7 @@ export function PokemonCompare({
                     key={type.id}
                     className={cn(
                       'rounded-md border px-1.5 py-0.5 text-[10px] font-medium leading-none',
-                      TYPE_STYLES[type.name.toLowerCase()] ?? DEFAULT_TYPE_STYLE
+                      getTypeBadgeStyle(type.name)
                     )}
                   >
                     {type.name}
@@ -377,11 +348,13 @@ export function PokemonCompare({
             </div>
 
             <div className="space-y-3.5">
-              {statsList.map((stat) => {
-                const diff = stat.val1 - stat.val2
+              {POKEMON_STATS_DEFINITIONS.map((stat) => {
+                const val1 = pokemon1.stats[stat.key]
+                const val2 = pokemon2.stats[stat.key]
+                const diff = val1 - val2
                 const winner = diff > 0 ? 1 : diff < 0 ? 2 : 0
-                const percent1 = Math.min(100, Math.round((stat.val1 / stat.max) * 100))
-                const percent2 = Math.min(100, Math.round((stat.val2 / stat.max) * 100))
+                const percent1 = Math.min(100, Math.round((val1 / MAX_POKEMON_STAT_VALUE) * 100))
+                const percent2 = Math.min(100, Math.round((val2 / MAX_POKEMON_STAT_VALUE) * 100))
 
                 return (
                   <div key={stat.key} className="space-y-1.5">
@@ -393,7 +366,7 @@ export function PokemonCompare({
                             winner === 1 ? 'font-bold text-emerald-700' : 'font-medium text-slate-600'
                           )}
                         >
-                          {stat.val1}
+                          {val1}
                         </span>
                         {winner === 1 && (
                           <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-1.5 py-0.2 rounded-full">
@@ -418,7 +391,7 @@ export function PokemonCompare({
                             winner === 2 ? 'font-bold text-emerald-700' : 'font-medium text-slate-600'
                           )}
                         >
-                          {stat.val2}
+                          {val2}
                         </span>
                       </div>
                     </div>
@@ -609,7 +582,7 @@ export function PokemonCompare({
                                 key={t.id}
                                 className={cn(
                                   'text-[10px] px-1.5 py-0.2 rounded border font-medium',
-                                  TYPE_STYLES[t.name.toLowerCase()] ?? DEFAULT_TYPE_STYLE
+                                  getTypeBadgeStyle(t.name)
                                 )}
                               >
                                 {t.name}
