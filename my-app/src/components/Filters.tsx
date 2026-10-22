@@ -125,7 +125,7 @@ export function Filters({
       : null
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 px-3.5 sm:px-4 py-2.5 border-t border-slate-200/70 text-xs bg-slate-50/40 rounded-b-2xl">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 px-3.5 sm:px-4 py-2.5 border-t border-slate-200/70 dark:border-slate-800 text-xs bg-slate-50/40 dark:bg-slate-900/40 rounded-b-2xl">
       <div
         className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 max-w-full touch-pan-x"
         role="toolbar"
@@ -142,8 +142,8 @@ export function Filters({
           className={cn(
             'px-2.5 py-1 rounded-lg font-semibold transition shrink-0 border cursor-pointer select-none active:scale-95',
             selectedType === null && !onlyFavorites
-              ? 'bg-slate-900 text-white shadow-xs border-slate-900'
-              : 'bg-slate-100/90 hover:bg-slate-200/80 text-slate-700 border-slate-200/70 hover:border-slate-300'
+              ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 shadow-xs border-slate-900 dark:border-slate-100'
+              : 'bg-slate-100/90 dark:bg-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border-slate-200/70 dark:border-slate-700 hover:border-slate-300'
           )}
         >
           Todos
@@ -223,7 +223,7 @@ export function Filters({
             'flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-semibold transition shrink-0 active:scale-95 border cursor-pointer select-none',
             onlyFavorites
               ? 'bg-rose-600 text-white shadow-xs shadow-rose-600/25 border-rose-700/30 ring-1 ring-rose-500/20'
-              : 'bg-slate-100/90 text-slate-700 border-slate-200/70 hover:bg-rose-50/90 hover:text-rose-700 hover:border-rose-200'
+              : 'bg-slate-100/90 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200/70 dark:border-slate-700 hover:bg-rose-50/90 dark:hover:bg-rose-950/40 hover:text-rose-700 dark:hover:text-rose-400 hover:border-rose-200'
           )}
           title={
             onlyFavorites
@@ -243,7 +243,7 @@ export function Filters({
             <span
               className={cn(
                 'px-1.5 py-0.5 rounded-full text-[10px] font-bold leading-none tracking-tight transition-colors',
-                onlyFavorites ? 'bg-white/25 text-white' : 'bg-slate-200/90 text-slate-700'
+                onlyFavorites ? 'bg-white/25 text-white' : 'bg-slate-200/90 dark:bg-slate-700 text-slate-700 dark:text-slate-200'
               )}
             >
               {favoritesCount}
@@ -252,7 +252,7 @@ export function Filters({
         </button>
       </div>
 
-      <div className="flex items-center justify-between sm:justify-end gap-2.5 shrink-0 pt-2 sm:pt-0 border-t border-slate-200/50 sm:border-0">
+      <div className="flex items-center justify-between sm:justify-end gap-2.5 shrink-0 pt-2 sm:pt-0 border-t border-slate-200/50 dark:border-slate-800 sm:border-0">
         <div className="relative flex items-center shrink-0">
           <ArrowUpDown
             className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none shrink-0"
@@ -262,10 +262,10 @@ export function Filters({
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value as SortOption)}
             aria-label="Ordenar Pokémon por"
-            className="appearance-none bg-slate-100/90 hover:bg-white pl-8 pr-7 py-1 text-xs font-semibold text-slate-700 border border-slate-200/70 hover:border-slate-300 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-400/20 focus:border-slate-400 transition shadow-2xs whitespace-nowrap"
+            className="appearance-none bg-slate-100/90 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-750 pl-8 pr-7 py-1 text-xs font-semibold text-slate-700 dark:text-slate-200 border border-slate-200/70 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-400/20 focus:border-slate-400 transition shadow-2xs whitespace-nowrap"
           >
             {SORT_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
+              <option key={option.value} value={option.value} className="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100">
                 {option.label}
               </option>
             ))}
@@ -276,12 +276,12 @@ export function Filters({
           />
         </div>
 
-        <div className="text-slate-500 shrink-0 font-medium whitespace-nowrap text-xs">
+        <div className="text-slate-500 dark:text-slate-400 shrink-0 font-medium whitespace-nowrap text-xs">
           {resultCount === totalCount ? (
             <span>{totalCount} Pokémon</span>
           ) : (
             <span>
-              <strong className="text-slate-800 font-semibold">{resultCount}</strong> de{' '}
+              <strong className="text-slate-800 dark:text-slate-200 font-semibold">{resultCount}</strong> de{' '}
               {totalCount}
             </span>
           )}

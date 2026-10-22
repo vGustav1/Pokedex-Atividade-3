@@ -30,6 +30,7 @@ Aplicação web desenvolvida com **React 19, Vite e Tailwind CSS**, permitindo e
     - Velocidade
     - Total de Atributos (Soma dos stats)
   - Navegação entre Pokémon (Anterior / Próximo) diretamente no modal e via teclado (setas e `Escape`).
+- 🌙 **Modo Claro / Escuro (Sun & Moon)**: Alternância fluida entre tema claro e escuro persistida no `localStorage`, com ícones animados de sol e lua.
 - 🍱 **Grid Responsivo**: Layout modular inspirado na estética Bento Grid, totalmente adaptado para telas mobile, tablets e desktop.
 - ⚠️ **Tratamento de Estado Vazio**: Mensagem amigável com botão de restauração quando nenhum Pokémon corresponde à pesquisa.
 

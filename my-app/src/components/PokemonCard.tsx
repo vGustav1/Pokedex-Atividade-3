@@ -39,15 +39,15 @@ export function PokemonCard({
       onClick={onClick}
       className={cn(
         'group relative flex flex-col justify-between overflow-hidden rounded-2xl',
-        'bg-white cursor-pointer select-none',
-        'border border-slate-200 hover:border-slate-300 transition-all duration-200',
-        'p-4 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/60',
+        'bg-white dark:bg-slate-900/90 cursor-pointer select-none',
+        'border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-200',
+        'p-4 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/60 dark:hover:shadow-black/40',
         className
       )}
     >
       <div>
-        <div className="relative flex aspect-square w-full items-center justify-center rounded-xl bg-slate-50 p-4 border border-slate-100">
-          <span className="absolute top-2.5 left-2.5 font-mono text-[11px] font-medium text-slate-400 tracking-wider">
+        <div className="relative flex aspect-square w-full items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800/40 p-4 border border-slate-100 dark:border-slate-800">
+          <span className="absolute top-2.5 left-2.5 font-mono text-[11px] font-medium text-slate-400 dark:text-slate-500 tracking-wider">
             {formatPokemonId(pokemon.id)}
           </span>
 
@@ -59,8 +59,8 @@ export function PokemonCard({
               'absolute top-2.5 right-2.5 z-10 flex items-center justify-center w-7 h-7 rounded-full',
               'transition-all duration-150',
               isFav
-                ? 'text-rose-500 bg-rose-50 hover:bg-rose-100 shadow-xs'
-                : 'text-slate-400 hover:text-rose-500 bg-white/90 hover:bg-white shadow-xs'
+                ? 'text-rose-500 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/40 shadow-xs'
+                : 'text-slate-400 dark:text-slate-500 hover:text-rose-500 dark:hover:text-rose-400 bg-white/90 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 shadow-xs'
             )}
           >
             <Heart
@@ -80,7 +80,7 @@ export function PokemonCard({
         </div>
 
         <div className="mt-3">
-          <h2 className="text-base font-semibold tracking-tight text-slate-900 capitalize">
+          <h2 className="text-base font-semibold tracking-tight text-slate-900 dark:text-slate-100 capitalize">
             {pokemon.name}
           </h2>
           <div className="mt-1.5 flex flex-wrap gap-1.5">
@@ -99,30 +99,30 @@ export function PokemonCard({
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-center">
+      <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-center">
         <div className="flex-1 min-w-0">
-          <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400 truncate">
+          <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500 truncate">
             HP
           </span>
-          <span className="text-xs font-semibold text-slate-700">
+          <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">
             {pokemon.stats.hp}
           </span>
         </div>
-        <div className="h-5 w-px bg-slate-200 shrink-0" />
+        <div className="h-5 w-px bg-slate-200 dark:bg-slate-800 shrink-0" />
         <div className="flex-1 min-w-0">
-          <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400 truncate">
+          <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500 truncate">
             Ataque
           </span>
-          <span className="text-xs font-semibold text-slate-700">
+          <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">
             {pokemon.stats.attack}
           </span>
         </div>
-        <div className="h-5 w-px bg-slate-200 shrink-0" />
+        <div className="h-5 w-px bg-slate-200 dark:bg-slate-800 shrink-0" />
         <div className="flex-1 min-w-0">
-          <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400 truncate">
+          <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500 truncate">
             Velocidade
           </span>
-          <span className="text-xs font-semibold text-slate-700">
+          <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">
             {pokemon.stats.speed}
           </span>
         </div>

@@ -8,6 +8,7 @@ import { PokemonCompare } from './components/PokemonCompare'
 import { TrainersModal } from './components/TrainersModal'
 import { AppleSpotlight } from './components/AppleSpotlight'
 import { useFavorites } from './hooks/useFavorites'
+import { useTheme } from './hooks/useTheme'
 import { sortPokemon, normalizeSearchTerm } from './utils/pokemon'
 import type { Pokemon, SortOption } from './types/pokemon'
 import './App.css'
@@ -21,6 +22,7 @@ function App() {
   const [comparePair, setComparePair] = useState<[Pokemon, Pokemon] | null>(null)
   const [isTrainersOpen, setIsTrainersOpen] = useState(false)
 
+  const { theme, toggleTheme } = useTheme()
   const { favorites, isFavorite, toggleFavorite } = useFavorites()
   const allPokemon: Pokemon[] = pokedexData.pokemon
 
@@ -108,6 +110,8 @@ function App() {
         onSearchChange={setSearchTerm}
         onOpenCompare={handleSpotlightCompare}
         onOpenTrainers={() => setIsTrainersOpen(true)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
         selectedType={selectedType}
         onTypeSelect={setSelectedType}
         onRandomSelect={handleRandomSelect}

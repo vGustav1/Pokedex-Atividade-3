@@ -75,17 +75,17 @@ export function PokemonDetails({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 8 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
-        className="relative w-full max-w-2xl bg-white border border-slate-200 shadow-2xl rounded-3xl overflow-hidden my-auto"
+        className="relative w-full max-w-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl rounded-3xl overflow-hidden my-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <header className="flex items-center justify-between border-b border-slate-100 px-5 sm:px-6 py-3.5 bg-white">
+        <header className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 px-5 sm:px-6 py-3.5 bg-white dark:bg-slate-900">
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={onPrevious}
               disabled={!hasPrevious}
               aria-label="Pokémon anterior"
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-30 disabled:pointer-events-none transition-colors border border-slate-200"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30 disabled:pointer-events-none transition-colors border border-slate-200 dark:border-slate-700"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
               <span>Anterior</span>
@@ -95,7 +95,7 @@ export function PokemonDetails({
               onClick={onNext}
               disabled={!hasNext}
               aria-label="Próximo Pokémon"
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-30 disabled:pointer-events-none transition-colors border border-slate-200"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30 disabled:pointer-events-none transition-colors border border-slate-200 dark:border-slate-700"
             >
               <span>Próximo</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -109,7 +109,7 @@ export function PokemonDetails({
                 onClick={() => onCompare(pokemon)}
                 aria-label="Comparar Pokémon"
                 title="Comparar este Pokémon"
-                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors border border-slate-200"
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border border-slate-200 dark:border-slate-700"
               >
                 <ArrowLeftRight className="w-3.5 h-3.5 text-slate-500" />
                 <span className="hidden sm:inline">Comparar</span>
@@ -121,7 +121,7 @@ export function PokemonDetails({
                 type="button"
                 onClick={onToggleFavorite}
                 aria-label={isFavorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
-                className="p-1.5 rounded-full text-slate-400 hover:text-rose-500 hover:bg-slate-100 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+                className="p-1.5 rounded-full text-slate-400 hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
               >
                 <Heart
                   className={cn(
@@ -136,7 +136,7 @@ export function PokemonDetails({
               type="button"
               onClick={onClose}
               aria-label="Fechar"
-              className="p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+              className="p-1.5 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
             >
               <X className="w-5 h-5" />
             </button>
@@ -146,8 +146,8 @@ export function PokemonDetails({
         <div className="p-6 sm:p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
             <div className="flex flex-col items-center text-center">
-              <div className="relative flex aspect-square w-full max-w-[240px] items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 p-6">
-                <span className="absolute top-3 left-3 font-mono text-xs font-semibold text-slate-400 tracking-wider">
+              <div className="relative flex aspect-square w-full max-w-[240px] items-center justify-center rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 p-6">
+                <span className="absolute top-3 left-3 font-mono text-xs font-semibold text-slate-400 dark:text-slate-500 tracking-wider">
                   {formatPokemonId(pokemon.id)}
                 </span>
                 <motion.img
@@ -163,7 +163,7 @@ export function PokemonDetails({
 
               <h2
                 id="pokemon-details-title"
-                className="mt-4 text-2xl font-bold tracking-tight text-slate-900 capitalize"
+                className="mt-4 text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 capitalize"
               >
                 {pokemon.name}
               </h2>
