@@ -1,36 +1,40 @@
+import { Heart } from 'lucide-react'
 import type { Pokemon } from '../types/pokemon'
-import { formatPokemonId, getPokemonArtworkUrl } from '../utils/pokemon'
+import {
+  formatPokemonId,
+  getPokemonArtworkUrl,
+  TYPE_STYLES,
+  DEFAULT_TYPE_STYLE,
+} from '../utils/pokemon'
+import { isFavorite as checkIsFavorite, toggleFavorite } from '../utils/favorites'
 import { cn } from '../lib/utils'
 
 export interface PokemonCardProps {
   pokemon: Pokemon
   className?: string
   onClick?: () => void
+  isFavorite?: boolean
+  onToggleFavorite?: (id: number) => void
 }
 
-const TYPE_STYLES: Record<string, string> = {
-  normal: 'bg-zinc-100 text-zinc-700 border-zinc-200',
-  fire: 'bg-orange-50 text-orange-700 border-orange-200',
-  water: 'bg-sky-50 text-sky-700 border-sky-200',
-  grass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-  electric: 'bg-amber-50 text-amber-700 border-amber-200',
-  ice: 'bg-cyan-50 text-cyan-700 border-cyan-200',
-  fighting: 'bg-red-50 text-red-700 border-red-200',
-  poison: 'bg-purple-50 text-purple-700 border-purple-200',
-  ground: 'bg-yellow-50 text-yellow-800 border-yellow-200',
-  flying: 'bg-indigo-50 text-indigo-700 border-indigo-200',
-  psychic: 'bg-pink-50 text-pink-700 border-pink-200',
-  bug: 'bg-lime-50 text-lime-800 border-lime-200',
-  rock: 'bg-stone-100 text-stone-700 border-stone-200',
-  ghost: 'bg-violet-50 text-violet-700 border-violet-200',
-  dragon: 'bg-blue-50 text-blue-800 border-blue-200',
-  steel: 'bg-slate-100 text-slate-700 border-slate-200',
-  fairy: 'bg-rose-50 text-rose-700 border-rose-200',
-}
+export function PokemonCard({
+  pokemon,
+  className,
+  onClick,
+  isFavorite: isFavoriteProp,
+  onToggleFavorite,
+}: PokemonCardProps) {
+  const isFav = isFavoriteProp !== undefined ? isFavoriteProp : checkIsFavorite(pokemon.id)
 
-const DEFAULT_TYPE_STYLE = 'bg-slate-100 text-slate-700 border-slate-200'
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (onToggleFavorite) {
+      onToggleFavorite(pokemon.id)
+    } else {
+      toggleFavorite(pokemon.id)
+    }
+  }
 
-export function PokemonCard({ pokemon, className, onClick }: PokemonCardProps) {
   return (
     <article
       onClick={onClick}
@@ -47,6 +51,27 @@ export function PokemonCard({ pokemon, className, onClick }: PokemonCardProps) {
           <span className="absolute top-2.5 left-2.5 font-mono text-[11px] font-medium text-slate-400 tracking-wider">
             {formatPokemonId(pokemon.id)}
           </span>
+
+          <button
+            type="button"
+            onClick={handleToggleFavorite}
+            aria-label={isFav ? `Remover ${pokemon.name} dos favoritos` : `Adicionar ${pokemon.name} aos favoritos`}
+            className={cn(
+              'absolute top-2.5 right-2.5 z-10 flex items-center justify-center w-7 h-7 rounded-full',
+              'transition-all duration-150',
+              isFav
+                ? 'text-rose-500 bg-rose-50 hover:bg-rose-100 shadow-xs'
+                : 'text-slate-400 hover:text-rose-500 bg-white/90 hover:bg-white shadow-xs'
+            )}
+          >
+            <Heart
+              className={cn(
+                'w-4 h-4 transition-transform active:scale-75',
+                isFav ? 'fill-rose-500 text-rose-500' : 'stroke-current'
+              )}
+            />
+          </button>
+
           <img
             src={getPokemonArtworkUrl(pokemon.id)}
             alt={pokemon.name}

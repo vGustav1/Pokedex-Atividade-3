@@ -1,38 +1,26 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Search, X, Sparkles, Flame, Droplets, Leaf, Zap } from 'lucide-react'
+import { Search, X, Sparkles } from 'lucide-react'
 import { cn } from '../lib/utils'
+import { Filters, type FiltersProps } from './Filters'
 
-interface QuickFilter {
-  id: string
-  label: string
-  icon: typeof Flame
-  color: string
-}
-
-const QUICK_FILTERS: QuickFilter[] = [
-  { id: 'Fire', label: 'Fogo', icon: Flame, color: 'text-amber-500 hover:bg-amber-500/10' },
-  { id: 'Water', label: 'Água', icon: Droplets, color: 'text-blue-500 hover:bg-blue-500/10' },
-  { id: 'Grass', label: 'Planta', icon: Leaf, color: 'text-emerald-500 hover:bg-emerald-500/10' },
-  { id: 'Electric', label: 'Elétrico', icon: Zap, color: 'text-yellow-500 hover:bg-yellow-500/10' },
-]
-
-interface AppleSpotlightProps {
+export interface AppleSpotlightProps extends FiltersProps {
   searchTerm: string
   onSearchChange: (value: string) => void
-  selectedType: string | null
-  onTypeSelect: (type: string | null) => void
   onRandomSelect?: () => void
-  totalCount: number
-  resultCount: number
 }
 
 export function AppleSpotlight({
   searchTerm,
   onSearchChange,
+  onRandomSelect,
   selectedType,
   onTypeSelect,
-  onRandomSelect,
+  onlyFavorites,
+  onToggleFavorites,
+  favoritesCount,
+  sortBy,
+  onSortChange,
   totalCount,
   resultCount,
 }: AppleSpotlightProps) {
@@ -68,7 +56,7 @@ export function AppleSpotlight({
             <button
               type="button"
               onClick={() => onSearchChange('')}
-              className="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              className="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition"
               title="Limpar pesquisa"
             >
               <X className="w-4 h-4" />
@@ -88,49 +76,17 @@ export function AppleSpotlight({
           )}
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 border-t border-slate-200/60 text-xs">
-          <div className="flex items-center gap-1.5 overflow-x-auto py-0.5">
-            <button
-              type="button"
-              onClick={() => onTypeSelect(null)}
-              className={cn(
-                'px-2.5 py-1 rounded-lg font-semibold transition',
-                selectedType === null
-                  ? 'bg-slate-900 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
-              )}
-            >
-              Todos
-            </button>
-
-            {QUICK_FILTERS.map((filter) => {
-              const Icon = filter.icon
-              const isSelected = selectedType === filter.id
-
-              return (
-                <button
-                  key={filter.id}
-                  type="button"
-                  onClick={() => onTypeSelect(isSelected ? null : filter.id)}
-                  className={cn(
-                    'flex items-center gap-1 px-2.5 py-1 rounded-lg font-semibold transition',
-                    filter.color,
-                    isSelected && 'bg-slate-900 text-white shadow-sm'
-                  )}
-                >
-                  <Icon className="w-3.5 h-3.5" />
-                  <span>{filter.label}</span>
-                </button>
-              )
-            })}
-          </div>
-
-          <span className="text-slate-500 shrink-0">
-            {resultCount === totalCount
-              ? `${totalCount} Pokémon`
-              : `${resultCount} de ${totalCount}`}
-          </span>
-        </div>
+        <Filters
+          selectedType={selectedType}
+          onTypeSelect={onTypeSelect}
+          onlyFavorites={onlyFavorites}
+          onToggleFavorites={onToggleFavorites}
+          favoritesCount={favoritesCount}
+          sortBy={sortBy}
+          onSortChange={onSortChange}
+          totalCount={totalCount}
+          resultCount={resultCount}
+        />
       </motion.div>
     </div>
   )
