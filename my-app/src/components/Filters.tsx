@@ -1,5 +1,6 @@
-import { ArrowUpDown, ChevronDown, Flame, Droplets, Leaf, Zap, Heart } from 'lucide-react'
+import { ArrowUpDown, ChevronDown, Flame, Droplets, Leaf, Zap, Heart, X } from 'lucide-react'
 import type { SortOption } from '../types/pokemon'
+import { ALL_POKEMON_TYPES } from '../utils/pokemon'
 import { cn } from '../lib/utils'
 
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
@@ -9,6 +10,27 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: 'hp-desc', label: 'Maior HP' },
   { value: 'attack-desc', label: 'Maior Ataque' },
 ]
+
+const TYPE_ACTIVE_STYLES: Record<string, string> = {
+  normal: 'bg-zinc-600 text-white shadow-xs shadow-zinc-600/30',
+  fire: 'bg-orange-500 text-white shadow-xs shadow-orange-500/30',
+  water: 'bg-sky-500 text-white shadow-xs shadow-sky-500/30',
+  grass: 'bg-emerald-500 text-white shadow-xs shadow-emerald-500/30',
+  electric: 'bg-amber-400 text-slate-900 font-bold shadow-xs shadow-amber-400/30',
+  ice: 'bg-cyan-500 text-white shadow-xs shadow-cyan-500/30',
+  fighting: 'bg-red-600 text-white shadow-xs shadow-red-600/30',
+  poison: 'bg-purple-600 text-white shadow-xs shadow-purple-600/30',
+  ground: 'bg-amber-700 text-white shadow-xs shadow-amber-700/30',
+  flying: 'bg-indigo-500 text-white shadow-xs shadow-indigo-500/30',
+  psychic: 'bg-pink-500 text-white shadow-xs shadow-pink-500/30',
+  bug: 'bg-lime-600 text-white shadow-xs shadow-lime-600/30',
+  rock: 'bg-stone-600 text-white shadow-xs shadow-stone-600/30',
+  ghost: 'bg-violet-700 text-white shadow-xs shadow-violet-700/30',
+  dragon: 'bg-blue-900 text-white shadow-xs shadow-blue-900/30',
+  steel: 'bg-slate-500 text-white shadow-xs shadow-slate-500/30',
+  fairy: 'bg-rose-400 text-white shadow-xs shadow-rose-400/30',
+  dark: 'bg-zinc-800 text-white shadow-xs shadow-zinc-800/30',
+}
 
 interface QuickFilter {
   id: string
@@ -72,6 +94,18 @@ export function Filters({
   totalCount,
   resultCount,
 }: FiltersProps) {
+  const isQuickFilter = QUICK_FILTERS.some(
+    (filter) => filter.id.toLowerCase() === selectedType?.toLowerCase()
+  )
+
+  const activeExtraType =
+    selectedType && !isQuickFilter
+      ? ALL_POKEMON_TYPES.find((t) => t.id.toLowerCase() === selectedType.toLowerCase()) ?? {
+          id: selectedType,
+          label: selectedType,
+        }
+      : null
+
   return (
     <div className="flex flex-wrap items-center justify-between gap-2.5 px-4 py-2.5 border-t border-slate-200/60 text-xs">
       <div className="flex items-center gap-1.5 overflow-x-auto py-0.5 max-w-full">
@@ -90,7 +124,7 @@ export function Filters({
 
         {QUICK_FILTERS.map((filter) => {
           const Icon = filter.icon
-          const isSelected = selectedType === filter.id
+          const isSelected = selectedType?.toLowerCase() === filter.id.toLowerCase()
 
           return (
             <button
@@ -107,6 +141,39 @@ export function Filters({
             </button>
           )
         })}
+
+        {activeExtraType && (
+          <button
+            type="button"
+            onClick={() => onTypeSelect(null)}
+            className={cn(
+              'flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-semibold transition shrink-0',
+              TYPE_ACTIVE_STYLES[activeExtraType.id.toLowerCase()] ??
+                'bg-slate-900 text-white shadow-xs'
+            )}
+            title={`Remover filtro de ${activeExtraType.label}`}
+          >
+            <span>{activeExtraType.label}</span>
+            <X className="w-3.5 h-3.5 opacity-80 hover:opacity-100" />
+          </button>
+        )}
+
+        <div className="relative flex items-center shrink-0">
+          <select
+            value={selectedType ?? ''}
+            onChange={(e) => onTypeSelect(e.target.value ? e.target.value : null)}
+            aria-label="Filtrar por todos os tipos"
+            className="appearance-none bg-white/70 hover:bg-white pl-2.5 pr-7 py-1 text-xs font-medium text-slate-700 border border-slate-200 rounded-lg cursor-pointer focus:outline-none focus:ring-1 focus:ring-slate-400 transition"
+          >
+            <option value="">Mais tipos...</option>
+            {ALL_POKEMON_TYPES.map((type) => (
+              <option key={type.id} value={type.id}>
+                {type.label}
+              </option>
+            ))}
+          </select>
+          <ChevronDown className="w-3 h-3 text-slate-400 absolute right-2 pointer-events-none" />
+        </div>
 
         <div className="w-px h-4 bg-slate-200 mx-1 shrink-0" />
 

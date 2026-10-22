@@ -45,6 +45,28 @@ export const TYPE_STYLES: Record<string, string> = {
   dragon: 'bg-blue-50 text-blue-800 border-blue-200',
   steel: 'bg-slate-100 text-slate-700 border-slate-200',
   fairy: 'bg-rose-50 text-rose-700 border-rose-200',
+  dark: 'bg-zinc-100 text-zinc-800 border-zinc-300',
 }
 
 export const DEFAULT_TYPE_STYLE = 'bg-slate-100 text-slate-700 border-slate-200'
+
+export const ALL_POKEMON_TYPES = [
+  { id: 'Normal', label: 'Normal' },
+  { id: 'Fire', label: 'Fogo' },
+  { id: 'Water', label: 'Água' },
+  { id: 'Grass', label: 'Planta' },
+  { id: 'Electric', label: 'Elétrico' },
+  { id: 'Ice', label: 'Gelo' },
+  { id: 'Fighting', label: 'Lutador' },
+  { id: 'Poison', label: 'Veneno' },
+  { id: 'Ground', label: 'Terra' },
+  { id: 'Flying', label: 'Voador' },
+  { id: 'Psychic', label: 'Psíquico' },
+  { id: 'Bug', label: 'Inseto' },
+  { id: 'Rock', label: 'Pedra' },
+  { id: 'Ghost', label: 'Fantasma' },
+  { id: 'Dragon', label: 'Dragão' },
+  { id: 'Steel', label: 'Aço' },
+  { id: 'Fairy', label: 'Fada' },
+  { id: 'Dark', label: 'Sombrio' },
+] as const

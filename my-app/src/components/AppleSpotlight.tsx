@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Search, X, Sparkles } from 'lucide-react'
+import { Search, X, Sparkles, Award, Swords } from 'lucide-react'
 import { cn } from '../lib/utils'
 import { Filters, type FiltersProps } from './Filters'
 
@@ -8,12 +8,16 @@ export interface AppleSpotlightProps extends FiltersProps {
   searchTerm: string
   onSearchChange: (value: string) => void
   onRandomSelect?: () => void
+  onOpenTrainers?: () => void
+  onOpenCompare?: () => void
 }
 
 export function AppleSpotlight({
   searchTerm,
   onSearchChange,
   onRandomSelect,
+  onOpenTrainers,
+  onOpenCompare,
   selectedType,
   onTypeSelect,
   onlyFavorites,
@@ -60,6 +64,30 @@ export function AppleSpotlight({
               title="Limpar pesquisa"
             >
               <X className="w-4 h-4" />
+            </button>
+          )}
+
+          {onOpenTrainers && (
+            <button
+              type="button"
+              onClick={onOpenTrainers}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-200/50 hover:bg-slate-200 text-xs font-semibold text-slate-700 transition shrink-0"
+              title="Ver Treinadores e suas equipes"
+            >
+              <Award className="w-3.5 h-3.5 text-amber-600" />
+              <span className="hidden sm:inline">Treinadores</span>
+            </button>
+          )}
+
+          {onOpenCompare && (
+            <button
+              type="button"
+              onClick={onOpenCompare}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-200/50 hover:bg-slate-200 text-xs font-semibold text-slate-700 transition shrink-0"
+              title="Comparar Pokémon"
+            >
+              <Swords className="w-3.5 h-3.5 text-indigo-600" />
+              <span className="hidden sm:inline">Comparar</span>
             </button>
           )}
 

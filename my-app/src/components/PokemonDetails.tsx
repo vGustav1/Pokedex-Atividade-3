@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { X, ChevronLeft, ChevronRight, Heart } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Heart, ArrowLeftRight } from 'lucide-react'
 import type { Pokemon } from '../types/pokemon'
 import { formatPokemonId, getPokemonArtworkUrl, TYPE_STYLES, DEFAULT_TYPE_STYLE } from '../utils/pokemon'
 import { cn } from '../lib/utils'
@@ -14,6 +14,7 @@ export interface PokemonDetailsProps {
   hasNext?: boolean
   isFavorite?: boolean
   onToggleFavorite?: () => void
+  onCompare?: (pokemon: Pokemon) => void
 }
 
 export function PokemonDetails({
@@ -25,6 +26,7 @@ export function PokemonDetails({
   hasNext = false,
   isFavorite = false,
   onToggleFavorite,
+  onCompare,
 }: PokemonDetailsProps) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -108,7 +110,20 @@ export function PokemonDetails({
             </button>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
+            {onCompare && (
+              <button
+                type="button"
+                onClick={() => onCompare(pokemon)}
+                aria-label="Comparar Pokémon"
+                title="Comparar este Pokémon"
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors border border-slate-200"
+              >
+                <ArrowLeftRight className="w-3.5 h-3.5 text-slate-500" />
+                <span className="hidden sm:inline">Comparar</span>
+              </button>
+            )}
+
             {onToggleFavorite && (
               <button
                 type="button"
@@ -230,6 +245,19 @@ export function PokemonDetails({
                     />
                   </div>
                 </div>
+
+                {onCompare && (
+                  <div className="pt-3 mt-4 border-t border-slate-100">
+                    <button
+                      type="button"
+                      onClick={() => onCompare(pokemon)}
+                      className="w-full inline-flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-slate-100 hover:text-slate-900 border border-slate-200 transition-colors shadow-2xs"
+                    >
+                      <ArrowLeftRight className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Comparar este Pokémon</span>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

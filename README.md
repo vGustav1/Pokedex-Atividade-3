@@ -16,6 +16,9 @@ Aplicação web desenvolvida com **React 19, Vite e Tailwind CSS**, permitindo e
   - Maior Ataque
 - ⭐ **Sistema de Favoritos**: Persistência no `localStorage` permitindo favoritar Pokémon e filtrar rapidamente apenas os favoritos.
 - 🎲 **Pokémon Aleatório**: Botão para selecionar e destacar uma criatura aleatória.
+- ⚔️ **Comparador de Pokémon**: Duelo lado a lado comparando os 6 atributos com barras animadas, cálculo de vantagens e sugestões de confrontos clássicos.
+- 🧑‍🚀 **Modal de Treinadores e Insígnias**: Visualização dos treinadores clássicos (Ash, Brock, Misty, etc.), contagem de insígnias e suas respectivas equipes de Pokémon.
+- 🧬 **Filtro Completo dos 18 Tipos**: Seletor com todos os tipos oficiais de Pokémon com cores dinâmicas para cada elemento.
 - 📄 **Modal de Detalhes Completo**:
   - Exibição da arte oficial em alta definição.
   - **Todos os 6 atributos obrigatórios** com barras de progresso proporcionais:
