@@ -14,14 +14,39 @@ interface QuickFilter {
   id: string
   label: string
   icon: typeof Flame
-  color: string
+  activeClass: string
+  inactiveClass: string
 }
 
 const QUICK_FILTERS: QuickFilter[] = [
-  { id: 'Fire', label: 'Fogo', icon: Flame, color: 'text-amber-500 hover:bg-amber-500/10' },
-  { id: 'Water', label: 'Água', icon: Droplets, color: 'text-blue-500 hover:bg-blue-500/10' },
-  { id: 'Grass', label: 'Planta', icon: Leaf, color: 'text-emerald-500 hover:bg-emerald-500/10' },
-  { id: 'Electric', label: 'Elétrico', icon: Zap, color: 'text-yellow-500 hover:bg-yellow-500/10' },
+  {
+    id: 'Fire',
+    label: 'Fogo',
+    icon: Flame,
+    activeClass: 'bg-orange-500 text-white shadow-xs shadow-orange-500/30',
+    inactiveClass: 'text-orange-600 hover:bg-orange-50',
+  },
+  {
+    id: 'Water',
+    label: 'Água',
+    icon: Droplets,
+    activeClass: 'bg-sky-500 text-white shadow-xs shadow-sky-500/30',
+    inactiveClass: 'text-sky-600 hover:bg-sky-50',
+  },
+  {
+    id: 'Grass',
+    label: 'Planta',
+    icon: Leaf,
+    activeClass: 'bg-emerald-500 text-white shadow-xs shadow-emerald-500/30',
+    inactiveClass: 'text-emerald-600 hover:bg-emerald-50',
+  },
+  {
+    id: 'Electric',
+    label: 'Elétrico',
+    icon: Zap,
+    activeClass: 'bg-amber-400 text-slate-900 font-bold shadow-xs shadow-amber-400/30',
+    inactiveClass: 'text-amber-600 hover:bg-amber-50',
+  },
 ]
 
 export interface FiltersProps {
@@ -74,8 +99,7 @@ export function Filters({
               onClick={() => onTypeSelect(isSelected ? null : filter.id)}
               className={cn(
                 'flex items-center gap-1 px-2.5 py-1 rounded-lg font-semibold transition shrink-0',
-                filter.color,
-                isSelected && 'bg-slate-900 text-white shadow-xs'
+                isSelected ? filter.activeClass : filter.inactiveClass
               )}
             >
               <Icon className="w-3.5 h-3.5" />
