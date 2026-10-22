@@ -138,15 +138,26 @@ export function TrainersModal({ onClose, onSelectPokemon }: TrainersModalProps) 
                 className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-xs transition hover:border-slate-300 hover:shadow-sm"
               >
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-3.5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-xs text-slate-700 uppercase tracking-wider">
-                      {trainer.name.slice(0, 2)}
+                  <div className="flex items-center gap-3.5">
+                    <div className="relative w-12 h-12 rounded-full bg-gradient-to-b from-slate-50 to-slate-100 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center shadow-xs">
+                      <img
+                        src={`/trainers/trainer-${trainer.id}.png`}
+                        alt={trainer.name}
+                        loading="lazy"
+                        className="w-full h-full object-contain p-1 transform scale-105"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none'
+                        }}
+                      />
+                      <span className="absolute font-bold text-xs text-slate-600 uppercase tracking-wider -z-10">
+                        {trainer.name.slice(0, 2)}
+                      </span>
                     </div>
                     <div>
                       <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-tight">
                         {trainer.name}
                       </h3>
-                      <span className="text-xs text-slate-400 font-medium">
+                      <span className="text-xs text-slate-500 font-medium">
                         {trainer.pokemonIds.length}{' '}
                         {trainer.pokemonIds.length === 1 ? 'Pokémon' : 'Pokémon na equipe'}
                       </span>
